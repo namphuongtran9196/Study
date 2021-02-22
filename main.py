@@ -4,14 +4,13 @@ import DataProcessing
 from sklearn.model_selection import train_test_split
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.layers import GlobalAveragePooling2D
-from tensorflow.keras.layers import Dropout
 from tensorflow.keras.layers import Dense
 
 #Set random seed for tensorflow and numpy
 tf.random.set_seed(0)
 np.random.seed(0)
-batch_size = 32
-epochs = 250
+batch_size = 8
+epochs = 50
 
 #Load train data from folder and labels from mat file
 train_files = DataProcessing.get_list_paths('Cars_Data/cars_train/')
@@ -29,7 +28,9 @@ y_ohe = tf.keras.utils.to_categorical(train_y-1, num_classes=num_classes)
 x_train, x_valid, y_train_ohe, y_valid_ohe = train_test_split(train_arr, y_ohe, test_size=0.25)
 
 #Create random transform image input
-train_datagen = ImageDataGenerator(ImageDataGenerator(rotation_range=360,
+train_datagen = ImageDataGenerator(ImageDataGenerator(
+                                    featurewise_center=True,
+                                    rotation_range=360,
                                    width_shift_range=2,
                                    height_shift_range=2,
                                    shear_range=1,
@@ -45,10 +46,8 @@ base_model = tf.keras.applications.ResNet152(
     include_top=False, weights='imagenet',
     input_shape=(224,224,3), classes=num_classes)
 x = GlobalAveragePooling2D(name='avg_pool')(base_model.output)
-x = Dense(1024, activation='relu')(x)
-x = Dropout(0.5)(x)
-x = Dense(1024, activation='relu')(x)
-x = Dropout(0.5)(x)
+x = Dense(4096, activation='relu')(x)
+x = Dense(4096, activation='relu')(x)
 predict = Dense(num_classes,activation='softmax')(x)
 
 device = '/cpu:0' if len(tf.config.experimental.list_physical_devices('GPU')) == 0 else '/gpu:0'
@@ -56,15 +55,15 @@ tf.device(device)
 with tf.device(device):
     # Create model
     model = tf.keras.models.Model(base_model.input, predict)
-    model.load_weights("my_model_test2.h5")
+    # model.load_weights("my_modelh5")
     for layer in base_model.layers:
-        layer.trainable = False
+        layer.trainable = True
     # Create callback to save model had accuracy on the best validation set
-    mcp = tf.keras.callbacks.ModelCheckpoint("my_model_test2.h5", monitor="val_accuracy",
+    mcp = tf.keras.callbacks.ModelCheckpoint("my_model.h5", monitor="val_accuracy",
                       save_best_only=True, save_weights_only=True)
 
     # Compile model
-    model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001), loss='categorical_crossentropy',
+    model.compile(optimizer=tf.keras.optimizers.SGD(learning_rate=0.1), loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
     # Trainning
