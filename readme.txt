@@ -5,7 +5,7 @@ Input: Image(224,224,3)
 Loss ≈ 2.01
 Accuracy ≈ 65.57%
 Classes: 196
-Optimizer: Adam Optimization Algorithm
+Optimizer: Gradient descen with momentum
 The model can classify 196 types of cars, but the current accuracy of the model is quite low, only about 65.57%%.
 I am currently working on improving the accuracy of the model.
 If you have any idea how to improve it, please comment below or inbox for me. All my source code has been uploaded to my Github, you take a look.
@@ -42,7 +42,7 @@ Input: Image(224,224,3)
 Loss ≈ 1.9
 Accuracy ≈ 65.57%
 Classes: 196
-Optimizer: Adam Optimization Algorithm
+Optimizer: Gradient descen with momentum
 Mô hình có khả năng phân biệt 196 loại xe ô tô tuy nhiên độ
 chính xác hiện tại của mô hình khá là thấp, chỉ đạt khoảng 65.57%%.
 Hiện tại tôi đang cố gắng cải thiện độ chính xác của mô hình.
