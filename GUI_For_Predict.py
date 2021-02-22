@@ -3,27 +3,22 @@ import sys
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import GlobalAveragePooling2D
-from tensorflow.keras.layers import Dropout
 from tensorflow.keras.layers import Dense
 from PIL import Image
 from os.path import dirname
 
 
 
-#Train model
+#Predict model
 base_model = tf.keras.applications.ResNet152(
     include_top=False, weights='imagenet',
     input_shape=(224,224,3), classes=196)
 x = GlobalAveragePooling2D(name='avg_pool')(base_model.output)
-x = Dense(4096,activation='relu')(x)
-x = Dropout(0.5)(x)
-x = Dense(4096,activation='relu')(x)
-x = Dropout(0.5)(x)
+x = Dense(4096, activation='relu')(x)
+x = Dense(4096, activation='relu')(x)
 x = Dense(196,activation='softmax')(x)
 
 device = '/cpu:0' if len(tf.config.experimental.list_physical_devices('GPU')) == 0 else '/gpu:0'
-batch_size = 32
-epochs = 100
 tf.device(device)
 with tf.device(device):
     # Create model
