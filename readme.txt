@@ -2,19 +2,18 @@ I am trying to rebuild the model classification cars based on model ResNet152 of
 Model: Resnet152
 Data: https://ai.stanford.edu/~jkrause/cars/car_dataset.html
 Input: Image(224,224,3)
-Loss ≈ 2.01
-Accuracy ≈ 65.57%
+Loss ≈ 1,37
+Accuracy ≈ 72,2%
 Classes: 196
 Optimizer: Gradient descen with momentum
-The model can classify 196 types of cars, but the current accuracy of the model is quite low, only about 65.57%%.
+The model can classify 196 types of cars, but the current accuracy of the model is quite low, only about 72,30%.
 I am currently working on improving the accuracy of the model.
 If you have any idea how to improve it, please comment below or inbox for me. All my source code has been uploaded to my Github, you take a look.
 
 Model explanation:
 I reuse the ResNet152 model of the tensorflow library. I replace the top layer with my neural network:
-Hidden layer:
-	Dense(4096,activation='relu')
-	Dense(4096,activation='relu')
+Input Layer: 
+	GlobalAveragePooling2D(name='avg_pool')
 Output layer:
 	Dense(196,activation='softmax')
 I use a random generator algorithm Input image in Tensorflow's ImageDataGenerator to change the training dataset:
@@ -39,8 +38,8 @@ Tôi đang dựng lại mô hình phân loại ô tô dựa trên mô hình ResN
 Model: Resnet152
 Data: https://ai.stanford.edu/~jkrause/cars/car_dataset.html
 Input: Image(224,224,3)
-Loss ≈ 1.9
-Accuracy ≈ 65.57%
+Loss ≈ 1.37
+Accuracy ≈ 72,2%
 Classes: 196
 Optimizer: Gradient descen with momentum
 Mô hình có khả năng phân biệt 196 loại xe ô tô tuy nhiên độ
@@ -54,9 +53,8 @@ Giải thích mô hình:
 Về mô hình tôi sử dụng lại toàn bộ phần mô hình trong thư viện
 tensorflow (ResNet152).
 Tôi thay đổi mô hình ở phần top layer với mạng neural kèm với sử dụng dropout cho mạng:
-Hidden layer:
-	Dense(4096,activation='relu')
-	Dense(4096,activation='relu')
+Input Layer: 
+	GlobalAveragePooling2D(name='avg_pool')
 Output layer:
 	Dense(196,activation='softmax')
 Tôi sử dụng thuật toán khởi tạo ngẫu nhiên đầu vào hình ảnh trong ImageDataGenerator của Tensorflow 
