@@ -29,25 +29,21 @@ x_train, x_valid, y_train_ohe, y_valid_ohe = train_test_split(train_arr, y_ohe, 
 
 #Create random transform image input
 train_datagen = ImageDataGenerator(ImageDataGenerator(
-                                    featurewise_center=True,
                                     rotation_range=360,
                                    width_shift_range=2,
                                    height_shift_range=2,
                                    shear_range=1,
-                                   zoom_range=(0, 100),
                                    horizontal_flip=True,
-                                   vertical_flip=True,
                                    brightness_range=(0, 1)
                                    ).get_random_transform(img_shape=(224, 224, 3)))
-
-training_set = train_datagen.flow(x_train, y_train_ohe, batch_size=batch_size)
+y_train_ohe = np.append(y_train_ohe,y_train_ohe,axis=0)
+x_train = np.append(x_train,x_train,axis=0)
+train_dataset = train_datagen.flow(x_train,y_train_ohe,batch_size=batch_size)
 
 base_model = tf.keras.applications.ResNet152(
     include_top=False, weights='imagenet',
     input_shape=(224,224,3), classes=num_classes)
 x = GlobalAveragePooling2D(name='avg_pool')(base_model.output)
-x = Dense(4096, activation='relu')(x)
-x = Dense(4096, activation='relu')(x)
 predict = Dense(num_classes,activation='softmax')(x)
 
 device = '/cpu:0' if len(tf.config.experimental.list_physical_devices('GPU')) == 0 else '/gpu:0'
