@@ -1,5 +1,5 @@
 My demo on Facebook:
-https://www.facebook.com/FarleyTr/posts/1595619703964152
+https://www.facebook.com/namphuongtran9196/posts/1595619703964152
 
 I am trying to rebuild the model classification cars based on model ResNet152 of Tensorflow library but instead of classifying 1000 classes, my model only classifying 196 classes.
 Model: Resnet152
