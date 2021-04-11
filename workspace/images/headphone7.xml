@@ -1,0 +1,26 @@
+<annotation>
+	<folder>images</folder>
+	<filename>headphone7.jpg</filename>
+	<path>D:\Study\AI_Study\Object_Detection_With_GitClone\workspace\images\headphone7.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>480</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>headphone</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>151</xmin>
+			<ymin>54</ymin>
+			<xmax>387</xmax>
+			<ymax>319</ymax>
+		</bndbox>
+	</object>
+</annotation>
