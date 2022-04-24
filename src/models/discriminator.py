@@ -6,7 +6,7 @@ sys.path.append(file_dir)
 import tensorflow as tf
 from tensorflow.keras import layers
 
-def get_dicriminator(input_shape=(None,None,3)):
+def build_discriminator(input_shape=(None,None,3)):
     model = tf.keras.Sequential(name='discriminator')
     model.add(layers.Conv2D(32, kernel_size=3, strides=(2, 2), padding='same', input_shape=input_shape))
     model.add(layers.LeakyReLU(0.2))
@@ -32,5 +32,5 @@ def get_dicriminator(input_shape=(None,None,3)):
     return model
 
 if __name__ == '__main__':
-    model = get_dicriminator(input_shape=(224,224,3))
+    model = build_discriminator(input_shape=(224,224,3))
     model.summary()
