@@ -33,7 +33,7 @@ def residual_block(input_shape,filters, kernel_size, strides,padding,name='resid
     output = layers.Add()([input_layers, x])
     return tf.keras.Model(inputs=input_layers, outputs=output,name=name)
 
-def get_generator(input_shape=(None,None,3)):
+def build_generator(input_shape=(None,None,3)):
     
     input_layer = layers.Input(shape=input_shape)
     
