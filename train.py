@@ -10,7 +10,7 @@ def main(args):
     model = build_animeGAN(input_shape=(256,256,3))
     model.summary()
     
-    model.compiled(optimizers=tf.keras.optimizers.Adam(lr=0.0002, beta_1=0.5),
+    model.compile(optimizers=tf.keras.optimizers.Adam(lr=0.0002, beta_1=0.5),
                    loss=[AnimeGeneratorLoss(),AnimeDiscriminatorLoss()])
     
     model.fit(dataset, epochs=100, steps_per_epoch=10)

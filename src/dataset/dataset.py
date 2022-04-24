@@ -20,11 +20,11 @@ class Dataset(tf.keras.utils.Sequence):
                  batch_size=64,
                  target_size=(256,256),
                  shuffle=True):
-        self.indexes = np.arange(len(self.imgs_real))
         self.batch_size = batch_size
         self.shuffle = shuffle
         self.target_size = target_size
         self.build(dataset_dir)
+        self.indexes = np.arange(len(self.imgs_real))
         self.length_cartoon = len(self.imgs_cartoon) // batch_size
         
     def __len__(self):

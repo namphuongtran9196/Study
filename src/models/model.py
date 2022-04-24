@@ -1,8 +1,8 @@
 import tensorflow as tf
 
 from tensorflow.keras import layers, Model
-from discriminator import build_discriminator
-from generator import build_generator
+from src.models.discriminator import build_discriminator
+from src.models.generator import build_generator
 
 def build_animeGAN(input_shape=(None,None,3)):
     """
