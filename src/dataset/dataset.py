@@ -20,11 +20,11 @@ class Dataset(tf.keras.utils.Sequence):
                  batch_size=64,
                  target_size=(256,256),
                  shuffle=True):
-        self.indexes = np.arange(len(self.imgs_real))
         self.batch_size = batch_size
         self.shuffle = shuffle
         self.target_size = target_size
         self.build(dataset_dir)
+        self.indexes = np.arange(len(self.imgs_real))
         self.length_cartoon = len(self.imgs_cartoon) // batch_size
         
     def __len__(self):
@@ -94,7 +94,7 @@ class Dataset(tf.keras.utils.Sequence):
         batch_cartoon_smooth = tf.convert_to_tensor(batch_imgs_real,dtype=tf.float32)
         # encode the labels to features pyramids
         
-        return batch_imgs_real, batch_imgs_cartoon, batch_cartoon_smooth 
+        return (batch_imgs_real, batch_imgs_cartoon, batch_cartoon_smooth), (batch_imgs_cartoon, batch_cartoon_smooth)
     
     def load_image(self, path):
         """Load the specified image and return a [H,W,3] Numpy array."""

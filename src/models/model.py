@@ -1,8 +1,10 @@
 import tensorflow as tf
 
 from tensorflow.keras import layers, Model
-from discriminator import build_discriminator
-from generator import build_generator
+from src.models.discriminator import build_discriminator
+from src.models.generator import build_generator
+# from discriminator import build_discriminator
+# from generator import build_generator
 
 def build_animeGAN(input_shape=(None,None,3)):
     """
@@ -30,9 +32,10 @@ def build_animeGAN(input_shape=(None,None,3)):
                  outputs={"cartoon_gen" : cartoon_gen,
                           "cartoon_predict":cartoon_predict, 
                           "cartoon_gen_predict":cartoon_gen_predict, 
-                          "smooth_cartoon_photos_predict":smooth_cartoon_photos_predict},
+                          "smooth_cartoon_predict":smooth_cartoon_photos_predict},
                  name = "AnimeGAN")
     
 if __name__ == '__main__':
     model = build_animeGAN(input_shape=(224,224,3))
+    print(len(model.output))
     model.summary()

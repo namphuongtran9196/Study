@@ -49,8 +49,10 @@ def build_generator(input_shape=(None,None,3)):
     
     # Residual block
     for i in range(8):
-        x = residual_block(input_shape=x.shape[1:], filters=256, kernel_size=3, strides=1, 
-                           padding='same', name='residual_block_'+str(i))(x)
+        x = residual_block(input_shape=x.shap(2, 256, 256, 3)
+(2, 32, 32, 1)
+(2, 32, 32, 1)
+(2, 32, 32, 1)e='residual_block_'+str(i))(x)
         
     # Upsampling block
     for i in range(1,3):
@@ -65,5 +67,5 @@ def build_generator(input_shape=(None,None,3)):
     return tf.keras.Model(inputs=input_layer, outputs=x, name='generator')
 
 if __name__ == '__main__':
-    generator = get_generator(input_shape = (224,224,3))
+    generator = build_generator(input_shape = (256,256,3))
     generator.summary()
