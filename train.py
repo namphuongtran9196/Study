@@ -55,6 +55,7 @@ def main(args):
               cartoon_gen = outputs["cartoon_gen"].numpy()
               cartoon_gen *= 255.0
               cartoon_gen = cartoon_gen.astype(np.uint8)
+              plt.figure(figsize=(50, 50))
               for i in range(16):
                 plt.subplot(4, 4, i+1)
                 plt.imshow(cartoon_gen[i])
