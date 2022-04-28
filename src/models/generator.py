@@ -57,7 +57,7 @@ def build_generator(input_shape=(None,None,3)):
         x = up_block(filters=128//i, kernel_size=3, padding='same', name='up_block_'+str(i))(x)
         
     # Last Convolution
-    x = layers.Conv2D(3, kernel_size=7, strides=(1, 1), padding='same', activation='tanh')(x)
+    x = layers.Conv2D(3, kernel_size=7, strides=(1, 1), padding='same')(x)
     
     # Activation
     x = layers.Activation('sigmoid')(x)

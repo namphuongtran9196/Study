@@ -15,8 +15,8 @@ def main(args):
     model.summary()
     model = tf.keras.models.load_model("/content/AnimeGAN/model.h5")
     
-    gen_loss_func = AnimeGeneratorLoss(batch_size=BATCH_SIZE)
-    dis_loss_func = AnimeDiscriminatorLoss(batch_size=BATCH_SIZE)
+    gen_loss_func = AnimeGeneratorLoss(batch_size=BATCH_SIZE,from_logits=True)
+    dis_loss_func = AnimeDiscriminatorLoss(batch_size=BATCH_SIZE,from_logits=True)
     
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.0002, beta_1=0.5)
     
@@ -37,7 +37,7 @@ def main(args):
         optimizer.apply_gradients(zip(gradients,model.trainable_variables))
         
         return gen_loss, dis_loss,outputs
-    os.makedirs("/content/AnimeGAN/images", exist_ok=True)
+    os.makedirs("/content/drive/Shareddrives/DSC_GAN/AnimeGAN/Checkpoints/images", exist_ok=True)
     for epoch in range(10):
         step = 0
         while(True):
@@ -59,7 +59,7 @@ def main(args):
                 plt.subplot(4, 4, i+1)
                 plt.imshow(cartoon_gen[i])
                 plt.axis('off')
-                plt.savefig("images/{}.jpg".format(str(epoch).zfill(5)))
+                plt.savefig("/content/drive/Shareddrives/DSC_GAN/AnimeGAN/Checkpoints/images/{}_{}.jpg".format(str(epoch).zfill(4),str(step).zfill(3)))
                 plt.close()
         model.save('/content/drive/Shareddrives/DSC_GAN/AnimeGAN/Checkpoints/model.h5')
         
