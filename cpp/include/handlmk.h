@@ -25,7 +25,7 @@ public:
 	HandLmkTFLite(const char *model, long modelSize);
 	HandLmkTFLite(const char *model);
     ~HandLmkTFLite();
-    void *detect(Mat src, HandLandmarkResult *res);
+    int *detect(Mat src, HandLandmarkResult *res);
 	void initDetectionModel(const char *model);
 	void initDetectionModel(const char *model, long modelSize);
 private:
@@ -36,5 +36,5 @@ private:
 	std::unique_ptr<tflite::Interpreter> m_interpreter;
 };
 
-void preprocessHand(Mat src, Mat& dst, float *bboxes, float* new_xyxy);
+int preprocessHand(Mat src, Mat& dst, float *bboxes, float* new_xyxy);
 void scale_hand_landmark(float *landmark, float *new_xyxy);
