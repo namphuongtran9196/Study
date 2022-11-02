@@ -20,14 +20,14 @@ struct Yolov5Result {
 	float xmax = 0.0;
 };
 
-const int MAX_OUTPUT = 1000;
+const int MAX_OUTPUT = 10;
 
 class YoloV5TFLite {
 public:
 	YoloV5TFLite(const char *model, long modelSize);
 	YoloV5TFLite(const char *model);
     ~YoloV5TFLite();
-    void *detect(Mat src, Yolov5Result *res);
+    int *detect(Mat src, Yolov5Result *res);
 	void initDetectionModel(const char *model);
 	void initDetectionModel(const char *model, long modelSize);
 private:

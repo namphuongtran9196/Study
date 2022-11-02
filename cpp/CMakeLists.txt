@@ -28,7 +28,7 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 target_link_libraries(${TARGET_NAME} ${OpenCV_LIBS})
 
 # Link tflite to libray
-set(TENSORFLOW_SOURCE_DIR "tensorflow_src")
+set(TENSORFLOW_SOURCE_DIR "/home/minami/Library/tensorflow_src")
 if(NOT TENSORFLOW_SOURCE_DIR)
   get_filename_component(TENSORFLOW_SOURCE_DIR
     "${CMAKE_CURRENT_LIST_DIR}/../../../../" ABSOLUTE)

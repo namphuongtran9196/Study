@@ -2,7 +2,7 @@
 #include <iostream>
 ////////////////////////////////////////////////// Image processing //////////////////////////////////////////////////
 
-void preprocessHand(Mat src, Mat& dst, float *bboxes, float* new_xyxy){
+int preprocessHand(Mat src, Mat& dst, float *bboxes, float* new_xyxy){
     float width = bboxes[2] - bboxes[0];
     float height = bboxes[3] - bboxes[1];
 
@@ -13,6 +13,9 @@ void preprocessHand(Mat src, Mat& dst, float *bboxes, float* new_xyxy){
     float new_ymax = min(bboxes[3] + height * 0.5f, (float)src.size().height);
     // crop image
     dst = src(Range(new_ymin, new_ymax), Range(new_xmin, new_xmax));
+    if (dst.empty()){
+        return 0;
+    }
     resize(dst, dst, Size(224,224));
     cvtColor(dst, dst, COLOR_BGR2RGB);
 
@@ -23,6 +26,7 @@ void preprocessHand(Mat src, Mat& dst, float *bboxes, float* new_xyxy){
     new_xyxy[1] = new_ymin;
     new_xyxy[2] = new_xmax;
     new_xyxy[3] = new_ymax;
+    return 1;
 }
 
 void scale_hand_landmark(float *landmark, float *new_xyxy){
@@ -83,7 +87,7 @@ void HandLmkTFLite::initDetectionModel(const char *tflitemodel, long modelSize) 
 	m_interpreter->SetNumThreads(1);
 }
 
-void *HandLmkTFLite::detect(Mat input, HandLandmarkResult *res) {
+int *HandLmkTFLite::detect(Mat input, HandLandmarkResult *res) {
 
     // convert the input image to float32
     input.convertTo(input, CV_32FC3);
@@ -106,6 +110,7 @@ void *HandLmkTFLite::detect(Mat input, HandLandmarkResult *res) {
 	// compute model instance
 	if (m_interpreter->Invoke() != kTfLiteOk) {
 		printf("Error invoking detection model");
+		return reinterpret_cast<int *>(0);
     } else{
         // left hand
         res[0].hand_score = outputLayer_hand_score[0];
@@ -123,4 +128,5 @@ void *HandLmkTFLite::detect(Mat input, HandLandmarkResult *res) {
             res[0].scale_world_landmark[i][2] = outputLayer_scale_world_landmark[i * 3 + 2];
 		}
 	}
+	return reinterpret_cast<int *>(1);
 }

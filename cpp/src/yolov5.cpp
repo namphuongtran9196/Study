@@ -109,7 +109,7 @@ void YoloV5TFLite::initDetectionModel(const char *tflitemodel, long modelSize) {
 	m_interpreter->SetNumThreads(1);
 }
 
-void *YoloV5TFLite::detect(Mat input, Yolov5Result res[]) {
+int *YoloV5TFLite::detect(Mat input, Yolov5Result res[]) {
 
     // convert the input image to float32
     input.convertTo(input, CV_32FC3);
@@ -129,6 +129,14 @@ void *YoloV5TFLite::detect(Mat input, Yolov5Result res[]) {
 	// compute model instance
 	if (m_interpreter->Invoke() != kTfLiteOk) {
 		printf("Error invoking detection model");
+        for (int i = 0; i < MAX_OUTPUT; ++i) {
+            res[i].xmin = -1.0f;
+            res[i].ymin = -1.0f;
+            res[i].xmax = -1.0f;
+            res[i].ymax = -1.0f;
+            res[i].score = -1.0f;
+        }
+        return reinterpret_cast<int *>(0);
 	} else{
 		for (int i = 0; i < MAX_OUTPUT; ++i) {
 			res[i].xmin = outputLayer[i*5];
@@ -138,4 +146,5 @@ void *YoloV5TFLite::detect(Mat input, Yolov5Result res[]) {
 			res[i].score = outputLayer[i*5+4];
 		}
 	}
+    return reinterpret_cast<int *>(1);
 }

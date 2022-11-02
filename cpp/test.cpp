@@ -43,6 +43,7 @@ int main(int, char * argv[])
             cerr << "ERROR! blank frame grabbed\n";
             break;
         }
+        flip(frame, frame, 1);
         Mat image;
         cvtColor(frame.clone(), image, COLOR_BGR2RGB);
         letterbox(image, image, Size(640,640), 32, false);
