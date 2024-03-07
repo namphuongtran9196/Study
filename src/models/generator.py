@@ -49,17 +49,15 @@ def build_generator(input_shape=(None,None,3)):
     
     # Residual block
     for i in range(8):
-        x = residual_block(input_shape=x.shap(2, 256, 256, 3)
-(2, 32, 32, 1)
-(2, 32, 32, 1)
-(2, 32, 32, 1)e='residual_block_'+str(i))(x)
+        x = residual_block(input_shape=x.shape[1:], filters=256, kernel_size=3, strides=1, 
+                           padding='same', name='residual_block_'+str(i))(x)
         
     # Upsampling block
     for i in range(1,3):
         x = up_block(filters=128//i, kernel_size=3, padding='same', name='up_block_'+str(i))(x)
         
     # Last Convolution
-    x = layers.Conv2D(3, kernel_size=7, strides=(1, 1), padding='same', activation='tanh')(x)
+    x = layers.Conv2D(3, kernel_size=7, strides=(1, 1), padding='same')(x)
     
     # Activation
     x = layers.Activation('sigmoid')(x)
